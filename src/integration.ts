@@ -20,7 +20,7 @@ export default (config: AstroAuthConfig = {}): AstroIntegration => ({
 			config.prefix ??= '/api/auth'
 
 			if (config.injectEndpoints !== false) {
-				const currentDir = new URL('.', import.meta.url)
+				const currentDir = new URL('.', import.meta.url).toString().replace('file://', '')
 				injectRoute({
 					pattern: config.prefix + '/[...auth]',
 					entryPoint: currentDir + '/api/[...auth].ts',
