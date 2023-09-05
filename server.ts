@@ -25,8 +25,6 @@
  */
 import { Auth } from '@auth/core'
 import type { AuthAction, Session } from '@auth/core/types'
-import { type Cookie, parseString, splitCookiesString } from 'set-cookie-parser'
-import { serialize } from 'cookie'
 import authConfig from 'auth:config'
 
 const actions: AuthAction[] = [
@@ -40,41 +38,14 @@ const actions: AuthAction[] = [
 	'error',
 ]
 
-// solves the same issue that exists in @auth/solid-js
-const getSetCookieCallback = (cook?: string | null): Cookie | undefined => {
-	if (!cook) return
-	const splitCookie = splitCookiesString(cook)
-	for (const cookName of [
-		'__Secure-next-auth.session-token',
-		'next-auth.session-token',
-		'next-auth.pkce.code_verifier',
-		'__Secure-next-auth.pkce.code_verifier',
-	]) {
-		const temp = splitCookie.find((e) => e.startsWith(`${cookName}=`))
-		if (temp) {
-			return parseString(temp)
-		}
-	}
-	return parseString(splitCookie?.[0] ?? '') // just return the first cookie if no session token is found
-}
-
 function AstroAuthHandler(prefix: string, options = authConfig) {
 	return async ({ request }: { request: Request }) => {
+		console.log(request.url)
 		const url = new URL(request.url)
 		const action = url.pathname.slice(prefix.length + 1).split('/')[0] as AuthAction
 
 		if (!actions.includes(action) || !url.pathname.startsWith(prefix + '/')) return
-
 		const res = await Auth(request, options)
-		if (['callback', 'signin', 'signout'].includes(action)) {
-			const parsedCookie = getSetCookieCallback(res.clone().headers.get('Set-Cookie'))
-			if (parsedCookie) {
-				res.headers.set(
-					'Set-Cookie',
-					serialize(parsedCookie.name, parsedCookie.value, parsedCookie as any)
-				)
-			}
-		}
 		return res
 	}
 }
@@ -112,6 +83,7 @@ export function AstroAuth(options = authConfig) {
 			return await handler(event)
 		},
 		async post(event: any) {
+			console.log(event)
 			return await handler(event)
 		},
 	}
