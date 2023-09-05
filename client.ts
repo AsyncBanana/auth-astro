@@ -30,7 +30,7 @@ export async function signIn<P extends RedirectableProviderType | undefined = un
 	options?: AstroSignInOptions,
 	authorizationParams?: SignInAuthorizationParams
 ) {
-	const { callbackUrl = window.location.href, redirect = true } = options ?? {}
+	const { callbackUrl = window.location.href, redirect } = options ?? {}
 	const { prefix = '/api/auth', ...opts } = options ?? {}
 
 	// TODO: Support custom providers
@@ -64,7 +64,7 @@ export async function signIn<P extends RedirectableProviderType | undefined = un
 	const data = await res.clone().json()
 	const error = new URL(data.url).searchParams.get('error')
 
-	if (redirect || !isSupportingReturn || !error) {
+	if ((redirect ?? !isSupportingReturn) && !error) {
 		// TODO: Do not redirect for Credentials and Email providers by default in next major
 		window.location.href = data.url ?? callbackUrl
 		// If url contains a hash, the browser does not reload the page. We reload manually
