@@ -40,7 +40,6 @@ const actions: AuthAction[] = [
 
 function AstroAuthHandler(prefix: string, options = authConfig) {
 	return async ({ request }: { request: Request }) => {
-		console.log(request.url)
 		const url = new URL(request.url)
 		const action = url.pathname.slice(prefix.length + 1).split('/')[0] as AuthAction
 
@@ -83,7 +82,6 @@ export function AstroAuth(options = authConfig) {
 			return await handler(event)
 		},
 		async post(event: any) {
-			console.log(event)
 			return await handler(event)
 		},
 	}
