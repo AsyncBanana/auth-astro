@@ -1,6 +1,6 @@
 {
 	"name": "@convocomet/auth-astro",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "./index.ts",
 	"types": "module.d.ts",
 	"engines": {
