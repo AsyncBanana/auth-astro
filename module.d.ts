@@ -3,7 +3,7 @@ declare module 'auth:config' {
 	export default config
 }
 
-declare module 'auth-astro' {
+declare module '@convocomet/auth-astro' {
 	const index: import('./index').Integration
 	const defineConfig: (config: import('./src/config').FullAuthConfig) => ConfigEnv
 	export default index
