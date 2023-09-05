@@ -78,12 +78,8 @@ export function AstroAuth(options = authConfig) {
 
 	const handler = AstroAuthHandler(prefix, authOptions)
 	return {
-		async get(event: any) {
-			return await handler(event)
-		},
-		async post(event: any) {
-			return await handler(event)
-		},
+		GET: handler,
+		POST: handler,
 	}
 }
 
