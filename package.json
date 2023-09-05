@@ -1,6 +1,6 @@
 {
-	"name": "auth-astro",
-	"version": "3.0.1",
+	"name": "@asyncbanana/auth-astro",
+	"version": "1.0.0",
 	"main": "./index.ts",
 	"types": "module.d.ts",
 	"engines": {
@@ -8,8 +8,9 @@
 	},
 	"license": "MIT",
 	"repository": "https://github.com/nowaythatworked/auth-astro.git",
-	"author": "nowaythatworked <jan.czekala99@web.de>",
+	"author": "AsyncBanana <jej.jackson.08@gmail.com>",
 	"contributors": [
+		"nowaythatworked <jan.czekala99@web.de>",
 		"Otterlord <otterlord.dev@gmail.com>",
 		"tajkirkpatrick"
 	],
@@ -47,6 +48,15 @@
 		"oauth",
 		"astro-auth",
 		"astro-integration"
+	],
+	"files": [
+		"src",
+		"server.ts",
+		"client.ts",
+		"component.ts",
+		"index.ts",
+		"module.d.ts",
+		"tsconfig.json"
 	],
 	"packageManager": "pnpm@8.7.1"
 }

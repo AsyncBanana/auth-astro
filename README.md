@@ -1,5 +1,7 @@
 # Auth Astro
 
+This is a fork of [Auth Astro](https://github.com/nowaythatworked/auth-astro), including many fixes and new features, which was created due to a lack of maintenance in the upstream version.
+
 Auth Astro is the easiest way to add Authentication to your Astro Project. It wraps the core of [Auth.js](https://authjs.dev/) into an Astro integration which automatically adds the endpoints and handles everything else.
 
 (**disclaimer**: Please don´t confuse this package with [astro-auth](https://github.com/astro-community/astro-auth))
@@ -9,7 +11,7 @@ Auth Astro is the easiest way to add Authentication to your Astro Project. It wr
 The easiest way to get started is adding this package using the astro cli.
 
 ```bash
-npm run astro add auth-astro
+npm run astro add @asyncbanana/auth-astro
 ```
 
 This will install the package and required peer-dependencies and add the integration to your config.
@@ -18,10 +20,8 @@ You can now jump to [configuration](#configuration)
 Alternarviely you can install the required packagages on your own.
 
 ```bash
-npm install auth-astro@latest @auth/core@latest
+npm install @asyncbanana/auth-astro@latest @auth/core@latest
 ```
-
-> **Note**: If you´re using pnpm you must also install cookie: `pnpm i cookie`
 
 Next you need to [add the integration to your astro config](https://docs.astro.build/en/guides/integrations-guide/#using-integrations) by importing it and listing it in the integrations array.
 
@@ -31,7 +31,7 @@ Create your [auth configuration](https://authjs.dev/getting-started/oauth-tutori
 
 ```ts title="auth.config.ts"
 import GitHub from '@auth/core/providers/github'
-import { defineConfig } from 'astro-auth'
+import { defineConfig } from '@asyncbanana/auth-astro'
 
 export default defineConfig({
 	providers: [
@@ -108,7 +108,7 @@ The `signIn` and `signOut` methods can be imported dynamically in an inline scri
 		<button id="logout">Logout</button>
 
 		<script>
-			const { signIn, signOut } = await import("auth-astro/client")
+			const { signIn, signOut } = await import("@asyncbanana/auth-astro/client")
 			document.querySelector("#login").onclick = () => signIn("github")
 			document.querySelector("#logout").onclick = () => signOut()
 		</script>
@@ -118,11 +118,11 @@ The `signIn` and `signOut` methods can be imported dynamically in an inline scri
 
 ### With auth-astro's Components
 
-Alternatively, you can use the `SignIn` and `SignOut` button components provided by `auth-astro/components` importing them into your Astro [component's script](https://docs.astro.build/en/core-concepts/astro-components/#the-component-script)
+Alternatively, you can use the `SignIn` and `SignOut` button components provided by `@asyncbanana/auth-astro/components` importing them into your Astro [component's script](https://docs.astro.build/en/core-concepts/astro-components/#the-component-script)
 
 ```jsx
 ---
-import { SignIn, SignOut } from 'auth-astro/components'
+import { SignIn, SignOut } from '@asyncbanana/auth-astro/components'
 ---
 <html>
   <body>
@@ -142,7 +142,7 @@ You can fetch the session in one of two ways. The `getSession` method can be use
 
 ```tsx title="src/pages/index.astro"
 ---
-import { getSession } from 'auth-astro/server';
+import { getSession } from '@asyncbanana/auth-astro/server';
 
 const session = await getSession(Astro.request)
 ---
@@ -160,7 +160,7 @@ Alternatively, you can use the `Auth` component to fetch the session using a ren
 ```tsx title="src/pages/index.astro"
 ---
 import type { Session } from '@auth/core/types';
-import { Auth, Signin, Signout } from 'auth-astro/components';
+import { Auth, Signin, Signout } from '@asyncbanana/auth-astro/components';
 ---
 <Auth>
   {(session: Session) =>
@@ -179,7 +179,7 @@ import { Auth, Signin, Signout } from 'auth-astro/components';
 
 # State of Project
 
-We currently are waiting for the [PR](https://github.com/nextauthjs/next-auth/pull/6463) in the offical [next-auth](https://github.com/nextauthjs/next-auth/) repository to be merged. Once this happened this package will be deprecated.
+Hopefully, the fixes contained in this project. Eventually, this should be merged into [Auth.js](https://github.com/nextauthjs/next-auth), and when that happens this package will be deprecated.
 
 # Contribution
 
